@@ -1,9 +1,44 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# db/seeds.rb
+require "faker"
+
+puts "Cleaning database..."
+Booking.destroy_all
+Experience.destroy_all
+User.destroy_all
+
+puts "Creating users..."
+users = 5.times.map do
+  User.create!(
+    email: Faker::Internet.unique.email,
+    password: 123456
+  )
+end
+
+puts "Creating experiences..."
+categories = ["Adventure", "Food", "Wellness", "Culture", "Nature"]
+experiences = 10.times.map do
+  Experience.create!(
+    title: Faker::Job.title,
+    description: Faker::Lorem.paragraph(sentence_count: 2),
+    location: Faker::Address.city,
+    price: rand(20..200),
+    rating: rand(3.0..5.0).round(1),
+    category: categories.sample,
+    host: users.sample
+  )
+end
+
+puts "Creating bookings..."
+15.times do
+  start_time = Faker::Time.forward(days: 30, period: :morning)
+  end_time = start_time + rand(1..4).days
+
+  Booking.create!(
+    guest: users.sample,
+    experience: experiences.sample,
+    start_time: start_time,
+    end_time: end_time
+  )
+end
+
+puts "✅ Done seeding!"
