@@ -1,4 +1,4 @@
 <h1>Experiences#index</h1>
 <% @experiences.each do |experience| %>
-<h2><%= experience.title %></h2>
+<h2><%= link_to experience.title, experience_path(experience)%></h2>
 <% end %>

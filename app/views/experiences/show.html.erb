@@ -1,2 +1,14 @@
 <h1>Experiences#show</h1>
-<p>Find me in app/views/experiences/show.html.erb</p>
+
+<h2><%= @experience.title %></h2>
+<p><%= @experience.description %></p>
+
+<h1>Reviews</h1>
+
+<% @reviews.each do |review|%>
+<div class="review">
+  <p><%= review.content %></p>
+  <p>Rating: <%= review.rating %></p>
+  <p>By: <%= review.user.email %></p>
+<% end %>
+</div>
