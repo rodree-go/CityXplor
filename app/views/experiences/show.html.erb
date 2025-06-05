@@ -2,6 +2,8 @@
 
 <h2><%= @experience.title %></h2>
 <p><%= @experience.description %></p>
+<%= link_to "Destroy", experience_path(@experience), data: {turbo_method: :delete, turbo_confirm: "Estas seguro que quieres borrar esta experiencia?"} %>
+<%= link_to "Edit", experience_path(@experience)  %>
 
 <h1>Reviews</h1>
 

@@ -15,7 +15,7 @@ class ExperiencesController < ApplicationController
   def create
     @experience = Experience.new(experience_params)
     @experience.host = current_user
-    if @experience.save
+    if @experience.save!
       redirect_to @experience, notice: 'Experience was successfully created.'
     else
       render :new, status: :unprocessable_entity
@@ -23,12 +23,23 @@ class ExperiencesController < ApplicationController
   end
 
   def edit
+    @experience = Experience.find(params[:id])
+
   end
 
   def update
+    @experience = Experience.find(params[:id])
+    if @experience.update(experience_params)
+      redirect_to @experience
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
+    @experience = Experience.find(params[:id])
+    @experience.destroy
+    redirect_to experiences_path status: :see_other
   end
 
   private
