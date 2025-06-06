@@ -26,7 +26,8 @@ experiences = 10.times.map do
     price: rand(20..200),
     rating: rand(3.0..5.0).round(1),
     category: categories.sample,
-    host: users.sample
+    host: users.sample,
+    img_url: "https://picsum.photos/seed/#{rand(1000)}/400/250"
   )
 end
 10.times do
