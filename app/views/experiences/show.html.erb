@@ -13,6 +13,7 @@
     <%= f.number_field :rating, in: 1..5 %>
     <%= f.submit "Send review", class: "btn btn-primary" %>
 <% end %>
+
 <% @reviews.each do |review|%>
 <div class="review">
     <p>
