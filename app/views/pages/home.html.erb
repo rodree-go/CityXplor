@@ -1,7 +1,7 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <div class="container-fluid">
     <%= link_to "#", class: "navbar-brand" do %>
-      <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png" %>
+      <%= image_tag "icon_cityxplor.png", class: "navbar-brand" %>
     <% end %>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,15 +39,13 @@
 
 
 
-<div class="cover text-center bg-light py-5">
-  <div class="container">
-    <h1 class="display-4">Discover Amazing Experiences</h1>
-    <p class="lead">City Xplor te conecta con lo mejor de tu ciudad</p>
+<div class="cover text-white text-center d-flex align-items-center justify-content-center" style="height: 400px; background-image: url(<%= asset_path('cover_cityxplor.png') %>); background-size: cover; background-position: center;">
+  <div>
   </div>
 </div>
 
 <div class="container my-5">
-  <h2 class="mb-4 text-center">Amazing Experiences</h2>
+  <h2 class="mb-4 text-center">Experiences</h2>
   <div class="row">
     <% @experiences.each do |experience| %>
       <div class="col-md-4">
