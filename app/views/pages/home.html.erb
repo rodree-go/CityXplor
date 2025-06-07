@@ -50,9 +50,6 @@
     <% @experiences.each do |experience| %>
       <div class="col-md-4">
         <div class="card mb-4 shadow-sm">
-          <% if experience.img_url.present? %>
-            <%= image_tag experience.img_url, class: "card-img-top" if experience.img_url.present? %>
-          <% end %>
           <div class="card-body">
             <h5 class="card-title"><%= experience.title %></h5>
             <p class="card-text"><%= truncate(experience.description, length: 100) %></p>
