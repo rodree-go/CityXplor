@@ -37,7 +37,7 @@
     <% @hosted_reviews.each do |review| %>
       <li>
         <strong><%= review.user.email %></strong> rated
-        <%= review.rating %>/5 for
+        (⭐ <%= review.rating %>)/5 for
         <%= review.experience.title %><br>
         "<%= review.content %>"
       </li>
