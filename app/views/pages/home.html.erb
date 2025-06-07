@@ -39,7 +39,7 @@
 
 
 
-<div class="cover text-white text-center d-flex align-items-center justify-content-center" style="height: 400px; background-image: url(<%= asset_path('cover_cityxplor.png') %>); background-size: cover; background-position: center;">
+<div class="cover text-white text-center d-flex align-items-center justify-content-center" style="height: 600px; background-image: url(<%= asset_path('cover_cityxplor.png') %>); background-size: cover; background-position: center;">
   <div>
   </div>
 </div>
@@ -50,9 +50,7 @@
     <% @experiences.each do |experience| %>
       <div class="col-md-4">
         <div class="card mb-4 shadow-sm">
-          <% if experience.img_url.present? %>
-            <%= image_tag experience.img_url, class: "card-img-top" if experience.img_url.present? %>
-          <% end %>
+            <%= image_tag(experience.img_url.presence || "https://picsum.photos/seed/#{experience.id}/400/250", class: "card-img-top") %>
           <div class="card-body">
             <h5 class="card-title"><%= experience.title %></h5>
             <p class="card-text"><%= truncate(experience.description, length: 100) %></p>
