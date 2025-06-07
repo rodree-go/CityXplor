@@ -1,67 +1,162 @@
 # db/seeds.rb
-require "faker"
 
-puts "Cleaning database..."
+require 'faker'
+
+# Borrar datos previos
 Review.destroy_all
 Booking.destroy_all
+Availability.destroy_all
 Experience.destroy_all
 User.destroy_all
 
+# Crear usuarios
+users = [
+  { email: 'tulum_host@example.com', password: '123456' },
+  { email: 'california_host@example.com', password: '123456' },
+  { email: 'roraima_host@example.com', password: '123456' },
+  { email: 'guest1@example.com', password: '123456' },
+  { email: 'guest2@example.com', password: '123456' }
+].map { |u| User.create!(u) }
 
-puts "Creating users..."
-users = 5.times.map do
-  User.create!(
-    email: Faker::Internet.unique.email,
-    password: 123456
+# Crear experiencias
+experiences_data = [
+  {
+    category: 'Nature',
+    title: 'Sunrise paddleboard & meditation',
+    location: 'Tulum',
+    description: 'Start your day gliding over turquoise waters and end with a grounding meditation on the shore.',
+    rating: 4.9,
+    price: 45.0,
+    seats: 6,
+    host: users[0]
+  },
+  {
+    category: 'Culture',
+    title: 'Explore Mayan ruins with a local guide',
+    location: 'Tulum',
+    description: 'Dive deep into Mayan history at Coba and Tulum ruins with a certified guide.',
+    rating: 4.8,
+    price: 65.0,
+    seats: 8,
+    host: users[0]
+  },
+  {
+    category: 'Food & Drink',
+    title: 'Mexican cooking class with cenote swim',
+    location: 'Tulum',
+    description: 'Learn to cook regional dishes, then relax in a nearby freshwater cenote.',
+    rating: 4.7,
+    price: 70.0,
+    seats: 10,
+    host: users[0]
+  },
+  {
+    category: 'Adventure',
+    title: 'Surfing the California coast',
+    location: 'California',
+    description: 'Catch waves with a pro on Malibu beach and enjoy fresh smoothies after.',
+    rating: 4.6,
+    price: 85.0,
+    seats: 5,
+    host: users[1]
+  },
+  {
+    category: 'Nature',
+    title: 'Yosemite National Park day hike',
+    location: 'California',
+    description: 'A guided trail through waterfalls and granite cliffs in Yosemite.',
+    rating: 4.9,
+    price: 90.0,
+    seats: 12,
+    host: users[1]
+  },
+  {
+    category: 'Art & Design',
+    title: 'Graffiti tour and street art workshop',
+    location: 'California',
+    description: 'Discover LA’s street art culture and create your own masterpiece.',
+    rating: 4.5,
+    price: 55.0,
+    seats: 15,
+    host: users[1]
+  },
+  {
+    category: 'Adventure',
+    title: 'Mount Roraima base hike',
+    location: 'Roraima, Venezuela',
+    description: 'Multi-day experience hiking to the legendary table-top mountain.',
+    rating: 4.8,
+    price: 150.0,
+    seats: 4,
+    host: users[2]
+  },
+  {
+    category: 'Nature',
+    title: 'Canoe ride in Canaima lagoon',
+    location: 'Roraima, Venezuela',
+    description: 'Explore the magical lagoon and its pink-hued skies by canoe.',
+    rating: 4.7,
+    price: 60.0,
+    seats: 6,
+    host: users[2]
+  },
+  {
+    category: 'Culture',
+    title: 'Meet the Pemon community',
+    location: 'Roraima, Venezuela',
+    description: 'Visit a local indigenous village and learn about their traditions and crafts.',
+    rating: 4.9,
+    price: 40.0,
+    seats: 10,
+    host: users[2]
+  }
+]
+
+experiences = experiences_data.map do |exp|
+  Experience.create!(
+    category: exp[:category],
+    title: exp[:title],
+    location: exp[:location],
+    description: exp[:description],
+    rating: exp[:rating],
+    price: exp[:price],
+    seats: exp[:seats],
+    user_id: exp[:host].id
   )
 end
 
-puts "Creating experiences..."
-categories = ["Adventure", "Food", "Wellness", "Culture", "Nature"]
-experiences = 10.times.map do
-  experience = Experience.create!(
-    title: Faker::Job.title,
-    description: Faker::Lorem.paragraph(sentence_count: 2),
-    location: Faker::Address.city,
-    price: rand(20..200),
-    rating: rand(3.0..5.0).round(1),
-    category: categories.sample,
-    host: users.sample
-  )
-end
-10.times do
-    Review.create!(
-      experience: experiences.sample,
-      user: users.sample,
-      content: Faker::Lorem.sentence(word_count: 10),
-      rating: rand(3.0..5.0).round(1)
+# Crear disponibilidades
+availabilities = []
+experiences.each do |experience|
+  3.times do |i|
+    start_time = Faker::Time.forward(days: 5 + i * 2, period: :morning)
+    availabilities << Availability.create!(
+      start_time: start_time,
+      end_time: start_time + 3.hours,
+      experience_id: experience.id,
+      seats_available: [2, 4, 6].sample
     )
   end
+end
 
-puts "Creating bookings..."
-15.times do
-  start_time = Faker::Time.forward(days: 30, period: :morning)
-  end_time = start_time + rand(1..4).days
-
-  Booking.create!(
-    guest: users.sample,
-    experience: experiences.sample,
-    start_time: start_time,
-    end_time: end_time
+# Crear bookings
+bookings = []
+5.times do
+  bookings << Booking.create!(
+    user_id: users.sample.id,
+    experience_id: experiences.sample.id,
+    availability_id: availabilities.sample.id
   )
 end
 
-availability = Availability.find_or_create_by!(
-  experience: some_experience,
-  start_time: "10:00",
-  end_time: "12:00"
-)
+# Crear reviews
+10.times do
+  Review.create!(
+    content: Faker::Quote.famous_last_words,
+    rating: rand(4.0..5.0).round(1),
+    experience_id: experiences.sample.id,
+    user_id: users[3..4].sample.id
+  )
+end
 
-booking = Booking.create!(
-  user: some_user,
-  experience: some_experience,
-  availability: availability
-)
-
-
-puts "✅ Done seeding!"
+puts "✅ Seeded #{users.count} users, #{experiences.count} experiences, #{availabilities.count} availabilities, #{bookings.count} bookings, and 10 reviews."
