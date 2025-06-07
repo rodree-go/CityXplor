@@ -4,7 +4,7 @@
 <p><%= @experience.description %></p>
 <%= link_to "Destroy", experience_path(@experience), data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this experience?"} %>
 <%= link_to "Edit", experience_path(@experience)  %>
-<%= link_to "Book Now", experience_bookings_path if @experience.seats > 0 %>
+<%= link_to "Book Now", experience_bookings_path(@experience) if @experience.seats > 0 %>
 
 <h1>Reviews</h1>
 
