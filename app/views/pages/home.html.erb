@@ -1,7 +1,7 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <div class="container-fluid">
     <%= link_to "#", class: "navbar-brand" do %>
-      <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png" %>
+      <%= image_tag "icon_cityxplor.png", class: "navbar-brand" %>
     <% end %>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,3 +36,58 @@
     </div>
   </div>
 </div>
+
+
+
+<div class="cover text-white text-center d-flex align-items-center justify-content-center" style="height: 400px; background-image: url(<%= asset_path('cover_cityxplor.png') %>); background-size: cover; background-position: center;">
+  <div>
+  </div>
+</div>
+
+<div class="container my-5">
+  <h2 class="mb-4 text-center">Experiences</h2>
+  <div class="row">
+    <% @experiences.each do |experience| %>
+      <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+          <% if experience.img_url.present? %>
+            <%= image_tag experience.img_url, class: "card-img-top" if experience.img_url.present? %>
+          <% end %>
+          <div class="card-body">
+            <h5 class="card-title"><%= experience.title %></h5>
+            <p class="card-text"><%= truncate(experience.description, length: 100) %></p>
+            <%= link_to "See more", experience_path(experience), class: "btn btn-primary btn-sm" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="text-center mt-3">
+    <%= link_to "Show more experiences", experiences_path, class: "btn btn-outline-primary" %>
+  </div>
+</div>
+
+<div class="bg-light py-5">
+  <div class="container">
+    <h2 class="mb-4 text-center">What People Are Saying</h2>
+    <div class="row">
+      <% @reviews.each do |review| %>
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <p class="card-text">"<%= truncate(review.content, length: 120) %>"</p>
+              <p class="text-muted mb-0"><strong><%= review.user.email %></strong></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<footer class="bg-dark text-white text-center py-3 mt-5">
+  <div class="container">
+    <p class="mb-1">&copy; <%= Date.today.year %> City Xplor. All rights reserved.</p>
+    <p class="mb-0">Made by the Best Team City Xplor Team</p>
+  </div>
+</footer>

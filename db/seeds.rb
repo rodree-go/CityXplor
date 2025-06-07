@@ -112,6 +112,7 @@ experiences_data = [
   }
 ]
 
+
 experiences = experiences_data.map do |exp|
   Experience.create!(
     category: exp[:category],
