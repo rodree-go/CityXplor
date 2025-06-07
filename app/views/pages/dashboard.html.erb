@@ -1,0 +1,64 @@
+<h1>Dashboard</h1>
+
+<h3>My Experiences</h3>
+<% if @hosted_experiences.present? %>
+  <ul>
+    <% @hosted_experiences.each do |experience| %>
+      <li>
+        <strong><%= experience.title %></strong><br>
+        <%= experience.description %><br>
+        <%= link_to 'View', experience_path(experience) %>
+        <%= link_to 'Edit', edit_experience_path(experience) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>You don't own any experiences yet.</p>
+<% end %>
+
+<h3>My Bookings</h3>
+<% if @booked_experiences.present? %>
+  <ul>
+    <% @booked_experiences.each do |booking| %>
+      <li>
+        <strong><%= booking.experience.title %></strong><br>
+          start_date  to  end_date <br>
+        <%= link_to 'Cancel Booking', booking, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>You don't have any bookings yet.</p>
+<% end %>
+
+<h3> Lastest Reviews Of Your Experiences</h3>
+<% if @hosted_reviews.present? %>
+  <ul>
+    <% @hosted_reviews.each do |review| %>
+      <li>
+        <strong><%= review.user.email %></strong> rated
+        (⭐ <%= review.rating %>)/5 for
+        <%= review.experience.title %><br>
+        "<%= review.content %>"
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No reviews for your experiences yet.</p>
+<% end %>
+
+<h3>Your Lastest Reviews</h3>
+<% if @user_reviews.present? %>
+  <ul>
+    <% @user_reviews.each do |review| %>
+      <li>
+        <strong><%= review.experience.title %></strong> rated
+        <%= review.rating %>/5 by You
+        <br>
+        "<%= review.content %>"
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>You haven't reviewed any experiences yet.</p>
+<% end %>
