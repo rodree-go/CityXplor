@@ -51,4 +51,17 @@ puts "Creating bookings..."
   )
 end
 
+availability = Availability.find_or_create_by!(
+  experience: some_experience,
+  start_time: "10:00",
+  end_time: "12:00"
+)
+
+booking = Booking.create!(
+  user: some_user,
+  experience: some_experience,
+  availability: availability
+)
+
+
 puts "✅ Done seeding!"
