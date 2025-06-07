@@ -8,6 +8,8 @@ class CreateExperiences < ActiveRecord::Migration[7.1]
       t.float :rating
       t.float :price
       t.integer :seats
+      t.datetime :start_time
+      t.datetime :end_time
       t.references :user, null: false, foreign_key: true
 
       t.timestamps
