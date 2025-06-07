@@ -5,7 +5,6 @@ require 'faker'
 # Borrar datos previos
 Review.destroy_all
 Booking.destroy_all
-Availability.destroy_all
 Experience.destroy_all
 User.destroy_all
 
@@ -28,7 +27,9 @@ experiences_data = [
     rating: 4.9,
     price: 45.0,
     seats: 6,
-    host: users[0]
+    host: users[0],
+    start_time: Date.today,
+    end_time: Date.today
   },
   {
     category: 'Culture',
@@ -38,7 +39,9 @@ experiences_data = [
     rating: 4.8,
     price: 65.0,
     seats: 8,
-    host: users[0]
+    host: users[0],
+    start_time: Date.today,
+    end_time: Date.today
   },
   {
     category: 'Food & Drink',
@@ -48,7 +51,9 @@ experiences_data = [
     rating: 4.7,
     price: 70.0,
     seats: 10,
-    host: users[0]
+    host: users[0],
+    start_time: Date.today,
+    end_time: Date.today
   },
   {
     category: 'Adventure',
@@ -58,7 +63,9 @@ experiences_data = [
     rating: 4.6,
     price: 85.0,
     seats: 5,
-    host: users[1]
+    host: users[1],
+    start_time: Date.today,
+    end_time: Date.today
   },
   {
     category: 'Nature',
@@ -68,7 +75,9 @@ experiences_data = [
     rating: 4.9,
     price: 90.0,
     seats: 12,
-    host: users[1]
+    host: users[1],
+    start_time: Date.today,
+    end_time: Date.today
   },
   {
     category: 'Art & Design',
@@ -78,7 +87,9 @@ experiences_data = [
     rating: 4.5,
     price: 55.0,
     seats: 15,
-    host: users[1]
+    host: users[1],
+    start_time: Date.today,
+    end_time: Date.today
   },
   {
     category: 'Adventure',
@@ -88,7 +99,9 @@ experiences_data = [
     rating: 4.8,
     price: 150.0,
     seats: 4,
-    host: users[2]
+    host: users[2],
+    start_time: Date.today,
+    end_time: Date.today
   },
   {
     category: 'Nature',
@@ -98,7 +111,9 @@ experiences_data = [
     rating: 4.7,
     price: 60.0,
     seats: 6,
-    host: users[2]
+    host: users[2],
+    start_time: Date.today,
+    end_time: Date.today
   },
   {
     category: 'Culture',
@@ -108,7 +123,9 @@ experiences_data = [
     rating: 4.9,
     price: 40.0,
     seats: 10,
-    host: users[2]
+    host: users[2],
+    start_time: Date.today,
+    end_time: Date.today
   }
 ]
 
@@ -122,22 +139,10 @@ experiences = experiences_data.map do |exp|
     rating: exp[:rating],
     price: exp[:price],
     seats: exp[:seats],
-    user_id: exp[:host].id
+    user_id: exp[:host].id,
+    start_time: exp[:start_time],
+    end_time: exp[:end_time]
   )
-end
-
-# Crear disponibilidades
-availabilities = []
-experiences.each do |experience|
-  3.times do |i|
-    start_time = Faker::Time.forward(days: 5 + i * 2, period: :morning)
-    availabilities << Availability.create!(
-      start_time: start_time,
-      end_time: start_time + 3.hours,
-      experience_id: experience.id,
-      seats_available: [2, 4, 6].sample
-    )
-  end
 end
 
 # Crear bookings
@@ -146,7 +151,6 @@ bookings = []
   bookings << Booking.create!(
     user_id: users.sample.id,
     experience_id: experiences.sample.id,
-    availability_id: availabilities.sample.id
   )
 end
 
@@ -160,4 +164,4 @@ end
   )
 end
 
-puts "✅ Seeded #{users.count} users, #{experiences.count} experiences, #{availabilities.count} availabilities, #{bookings.count} bookings, and 10 reviews."
+puts "✅ Seeded #{users.count} users, #{experiences.count} experiences, #{bookings.count} bookings, and 10 reviews."
