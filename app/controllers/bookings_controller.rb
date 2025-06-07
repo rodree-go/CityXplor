@@ -3,11 +3,6 @@ class BookingsController < ApplicationController
     @bookings = Booking.all
   end
 
-  def new
-    @experience = Experience.find(params[:experience_id])
-    @booking = Booking.new
-  end
-
   def create
     raise
   end
@@ -29,10 +24,4 @@ class BookingsController < ApplicationController
     # @booking = Booking.find(params[:id])
 
   end
-
-  # private
-  # def booking_params
-  #   params.require(:)
-  # end
-
 end

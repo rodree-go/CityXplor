@@ -7,4 +7,5 @@ class User < ApplicationRecord
   has_many :experiences
   has_many :bookings
   has_many :reviews
+  has_one_attached :avatar
 end
