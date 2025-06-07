@@ -5,4 +5,7 @@ class PagesController < ApplicationController
     @experiences = Experience.limit(3)
     @reviews = Review.limit(3)
   end
+  
+
+
 end
