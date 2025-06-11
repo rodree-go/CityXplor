@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'dashboard', to: 'pages#dashboard'
   resources :experiences do
     resources :reviews, only: [:create, :destroy]
-    resources :bookings, only: [:new, :create, :index, :show]
+    resources :bookings, only: [:new, :create, :show]
   end
   resources :bookings, only: [:edit, :destroy, :update]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

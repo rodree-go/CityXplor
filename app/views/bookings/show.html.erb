@@ -1,7 +1,7 @@
-<h1>Bookings#show</h1>
-<%# Cómo hago para poner el nombre de la experiencia %>
-<h1><%= @booking.experience %></h1>
-<p>Starting at:</p><%= @booking.start_time %>
-<p>Ending at:</p><%= @booking.end_time %>
-
-
+<div class="container">
+  <h1>Bookings#show</h1>
+  <h1><%= @booking.experience.title %></h1>
+  <p>Starting at:</p><%= @booking.experience.start_time %>
+  <p>Ending at:</p><%= @booking.experience.end_time %>
+  <%= link_to "Cancelar Experiencia", @booking, data: {turbo_method: :delete, turbo_confirm: "Seguro que quieres cancelar"} %>
+</div>
