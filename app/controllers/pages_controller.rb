@@ -7,10 +7,9 @@ class PagesController < ApplicationController
   end
 
   def dashboard
-    @user = current_user
-    @hosted_experiences = Experience.where(host: @user)
+    @hosted_experiences = Experience.where(host: current_user)
     @hosted_reviews = Review.where(experience: @hosted_experiences).limit(3)
-    @booked_experiences = Booking.where(user_id: @user)
-    @user_reviews = Review.where(user: @user).limit(3)
+    @booked_experiences = Booking.where(user_id: current_user)
+    @user_reviews = Review.where(user: current_user).limit(3)
   end
 end
