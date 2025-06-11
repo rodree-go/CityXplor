@@ -67,4 +67,22 @@
       <p>You haven't reviewed any experiences yet.</p>
     <% end %>
   <% end %>
+
+  <% unless Experience.find_by(user_id: current_user.id) %>
+  <h3> Recommended Experiences</h3>
+  <div class="row">
+    <% @recommended_experiences.each do |experience| %>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= experience.title %></h5>
+            <p class="card-text"><%= experience.description %></p>
+            <p class="card-text"><strong>Rating:</strong> ⭐ <%= experience.rating %></p>
+            <p class="card-text"><strong>Price:</strong> $<%= experience.price %></p>
+            <%= link_to 'View Experience', experience_path(experience), class: 'btn btn-primary' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
 </div>
