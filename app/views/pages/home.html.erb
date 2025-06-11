@@ -1,18 +1,20 @@
-<div class="cover text-white text-center d-flex align-items-center justify-content-center" style="height: 600px; background-image: url(<%= asset_path('cover_cityxplor.png') %>); background-size: cover; background-position: center;">
+<!-- Portada -->
+<div class="cover d-flex align-items-center justify-content-center text-white text-center" style="height: 600px; background-image: url(<%= asset_path('cover_cityxplor.png') %>); background-size: cover; background-position: center;">
   <div>
   </div>
 </div>
 
+<!-- EXPERIENCIAS -->
 <div class="container my-5">
   <h2 class="mb-4 text-center">Experiences</h2>
-  <div class="row">
+  <div class="row justify-content-center">
     <% @experiences.each do |experience| %>
-      <div class="col-md-4">
-        <div class="card mb-4 shadow-sm">
+      <div class="col-md-4 d-flex">
+        <div class="card mb-4 shadow-sm flex-fill">
           <div class="card-body">
             <h5 class="card-title"><%= experience.title %></h5>
             <p class="card-text"><%= truncate(experience.description, length: 100) %></p>
-            <%= link_to "See more", experience_path(experience), class: "btn btn-primary btn-sm" %>
+            <%= link_to "See more", experience_path(experience), class: "btn btn-primary btn-sm mt-2" %>
           </div>
         </div>
       </div>
@@ -23,13 +25,14 @@
   </div>
 </div>
 
-<div class="bg-light py-5">
+<!-- REVIEWS -->
+<div class="py-5">
   <div class="container">
     <h2 class="mb-4 text-center">What People Are Saying</h2>
-    <div class="row">
+    <div class="row justify-content-center">
       <% @reviews.each do |review| %>
-        <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
+        <div class="col-md-4 d-flex">
+          <div class="card mb-4 shadow-sm flex-fill">
             <div class="card-body">
               <p class="card-text">"<%= truncate(review.content, length: 120) %>"</p>
               <p class="text-muted mb-0"><strong><%= review.user.email %></strong></p>
@@ -40,10 +43,3 @@
     </div>
   </div>
 </div>
-
-<footer class="bg-dark text-white text-center py-3 mt-5">
-  <div class="container">
-    <p class="mb-1">&copy; <%= Date.today.year %> City Xplor. All rights reserved.</p>
-    <p class="mb-0">Made by the Best Team City Xplor Team</p>
-  </div>
-</footer>
