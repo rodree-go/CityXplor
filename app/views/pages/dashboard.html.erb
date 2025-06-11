@@ -12,6 +12,7 @@
           </li>
       <% end %>
       </ul>
+      <%= link_to 'Add New Experience', new_experience_path %>
     <% else %>
       <% "You don't own any experiences yet." if Experience.find_by(user_id: current_user.id) %>
     <% end %>
