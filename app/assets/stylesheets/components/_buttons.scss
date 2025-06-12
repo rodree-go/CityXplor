@@ -1,0 +1,20 @@
+.btn-primary {
+  background-color: $teal;
+  border-radius: $border-radius;
+  font-weight: 600;
+  padding: 10px 20px;
+
+  &:hover {
+    background-color: darken($teal, 10%);
+  }
+}
+
+.btn-outline-primary {
+  color: $teal;
+  border-color: $teal;
+
+  &:hover {
+    background-color: $teal;
+    color: white;
+  }
+}
