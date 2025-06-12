@@ -1,0 +1,23 @@
+.card {
+  border-radius: $border-radius;
+  font-family: $font-family;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .card-title {
+    color: $black;
+    font-weight: bold;
+  }
+
+  .card-text {
+    color: #555;
+  }
+
+  .btn-primary {
+    background-color: $teal;
+    border: none;
+
+    &:hover {
+      background-color: darken($teal, 10%);
+    }
+  }
+}
