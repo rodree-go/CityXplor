@@ -14,8 +14,16 @@
         <div class="d-flex justify-content-around flex-wrap mt-3 text-center">
           <p><strong>Rating:</strong> ⭐ <%= @experience.rating %></p>
           <p><strong>Price:</strong> $<%= @experience.price %></p>
-          <p><strong>Seats:</strong> <%= @experience.seats %></p>
+          <p><strong>Seats:</strong> <%= @experience.available_seats %></p>
+          <%= link_to "Destroy", experience_path(@experience), data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this experience?"} %>
+          <%= link_to "Edit", experience_path(@experience)  %>
+          <% if @experience.available_seats.positive? %>
+            <%= link_to "Book Now", experience_bookings_path(@experience),method: :post, data:{turbo: false} %>
+          <% else %>
+            <h3>There are no available seats fo this experience</h3>
+          <% end %>
         </div>
+
 
         <!-- Botones -->
         <div class="d-flex justify-content-center gap-2 flex-wrap mt-4">

@@ -1,2 +1,9 @@
-<h1>Bookings#edit</h1>
-<p>Find me in app/views/bookings/edit.html.erb</p>
+<h1>Edit Your Booking</h1>
+<div class="container mt-5 shadow border w-75">
+<h2><%= @experience.title %></h2>
+<p><%= @experience.description %></p>
+<p><%= @experience.price %></p>
+<p><%= @experience.availability %></p>
+
+<%= link_to "Book Now", experience_bookings_path %>
+</div>

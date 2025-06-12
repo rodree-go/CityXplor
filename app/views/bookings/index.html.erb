@@ -1,7 +1,9 @@
 <h1> Welcome! These Are Your Bookings:</h1>
-<ul>
-<% @bookings.each do |booking| %>
-<li><%= booking.start_time %> <%= booking.end_time %></li>
-<% end %>
-</ul>
-<%= console %>
+<div class="container">
+  <ul>
+  <% @bookings.each do |booking| %>
+  <li><%= booking.experience.title %> <%= booking.created_at%></li>
+  <% end %>
+  </ul>
+  <%= console %>
+</div>
