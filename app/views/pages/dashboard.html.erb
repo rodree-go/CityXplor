@@ -7,12 +7,19 @@
           <li>
             <strong><%= experience.title %></strong><br>
             <%= experience.description %><br>
-            <%= link_to 'View', experience_path(experience) %>
-            <%= link_to 'Edit', edit_experience_path(experience) %>
+            <strong>Category:</strong> <%= experience.category %><br>
+            <strong>Price:</strong> $<%= experience.price %><br>
+            <strong>Rating:</strong> ⭐ <%= experience.rating %><br>
+            <strong>Seats:</strong> <%= experience.available_seats %> / <%= experience.seats %><br>
+            <strong>Start Time:</strong> <%= experience.start_time %><br>
+            <strong>End Time:</strong> <%= experience.end_time %><br>
+            <strong>Location:</strong> <%= experience.location %><br>
+            <%= link_to 'View', experience_path(experience), class: "btn btn-primary" %>
+            <%= link_to 'Edit', edit_experience_path(experience), class: "btn btn-warning" %>
           </li>
       <% end %>
       </ul>
-      <%= link_to 'Add New Experience', new_experience_path %>
+      <%= link_to 'Add New Experience', new_experience_path, class: "btn btn-success" %>
     <% else %>
       <% "You don't own any experiences yet." if Experience.find_by(user_id: current_user.id) %>
     <% end %>
@@ -41,7 +48,8 @@
           <li>
             <strong><%= booking.experience.title %></strong><br>
               <%= booking.experience.start_time %>  to  <%= booking.experience.end_time %> <br>
-            <%= link_to 'Cancel Booking', booking, method: :delete, data: { confirm: 'Are you sure?' } %>
+              <%= link_to 'View Booking', experience_booking_path(booking.experience_id, booking.id), class: "btn btn-primary" %>
+            <%= link_to 'Cancel Booking', booking, class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
           </li>
         <% end %>
       </ul>
@@ -50,7 +58,6 @@
     <% end %>
   <% end %>
 
-
   <% unless Experience.find_by(user_id: current_user.id) %>
     <h3>Your Lastest Reviews</h3>
     <% if @user_reviews.present? %>
@@ -58,10 +65,11 @@
         <% @user_reviews.each do |review| %>
           <li>
             <strong><%= review.experience.title %></strong> rated
-            <%= review.rating %>/5 by You
+            ⭐<%= review.rating %>/5 by You
             <br>
             "<%= review.content %>"
           </li>
+        <%= link_to 'View', experience_path(review.experience_id), class: "btn btn-info" %>
         <% end %>
       </ul>
     <% else %>
