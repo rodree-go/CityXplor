@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [:create, :destroy]
     resources :bookings, only: [:new, :create, :show]
   end
-  resources :bookings, only: [:edit, :destroy, :update]
+  resources :bookings, only: [:index, :edit, :destroy, :update]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
