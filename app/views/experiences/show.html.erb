@@ -15,42 +15,42 @@
           <p><strong>Rating:</strong> ⭐ <%= @experience.rating %></p>
           <p><strong>Price:</strong> $<%= @experience.price %></p>
           <p><strong>Seats:</strong> <%= @experience.available_seats %></p>
-          <%= link_to "Destroy", experience_path(@experience), data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this experience?"} %>
-          <%= link_to "Edit", experience_path(@experience)  %>
-          <% if @experience.available_seats.positive? %>
-            <%= link_to "Book Now", experience_bookings_path(@experience),method: :post, data:{turbo: false} %>
-          <% else %>
-            <h3>There are no available seats fo this experience</h3>
-          <% end %>
         </div>
 
 
         <!-- Botones -->
         <div class="d-flex justify-content-center gap-2 flex-wrap mt-4">
-          <% if @experience.seats > 0 %>
-            <%= link_to "Book Now", experience_bookings_path(@experience), class: "btn btn-success" %>
+          <% unless Experience.find_by(user_id: current_user.id) %>
+            <% if @experience.available_seats.positive? %>
+                <%= link_to "Book Now", experience_bookings_path(@experience),method: :post, data:{turbo: false}, class: "btn btn-success" %>
+              <% else %>
+                <h3>There are no available seats fo this experience</h3>
+              <% end %>
           <% end %>
-          <%= link_to "Edit", edit_experience_path(@experience), class: "btn btn-outline-primary" %>
-          <%= link_to "Delete", experience_path(@experience), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
+          <% if @experience.user_id == current_user.id %>
+            <%= link_to "Edit", edit_experience_path(@experience), class: "btn btn-outline-primary" %>
+            <%= link_to "Destroy", experience_path(@experience), data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this experience?"}, class: "btn btn-outline-danger" %>
+          <% end %>
         </div>
 
-
         <!-- Formulario de reseña -->
-        <% if Booking.find_by(user_id: current_user.id) %>
-        <hr class="my-4">
-        <h4 class="text-center mb-3">Leave a Review</h4>
-          <%= form_with model: [@experience, Review.new], local: true do |f| %>
-            <div class="mb-3">
-              <%= f.label :content, "Your Review", class: "form-label" %>
-              <%= f.text_area :content, rows: 3, class: "form-control", placeholder: "Write something..." %>
-            </div>
-            <div class="mb-3">
-              <%= f.label :rating, "Rating (1-5)", class: "form-label" %>
-              <%= f.number_field :rating, in: 1..5, class: "form-control" %>
-            </div>
-            <div class="text-center">
-              <%= f.submit "Submit Review", class: "btn btn-primary" %>
-            </div>
+        <% unless Experience.find_by(user_id: current_user.id) %>
+          <% if Booking.find_by(user_id: current_user.id) %>
+          <hr class="my-4">
+          <h4 class="text-center mb-3">Leave a Review</h4>
+            <%= form_with model: [@experience, Review.new], local: true do |f| %>
+              <div class="mb-3">
+                <%= f.label :content, "Your Review", class: "form-label" %>
+                <%= f.text_area :content, rows: 3, class: "form-control", placeholder: "Write something..." %>
+              </div>
+              <div class="mb-3">
+                <%= f.label :rating, "Rating (1-5)", class: "form-label" %>
+                <%= f.number_field :rating, in: 1..5, class: "form-control" %>
+              </div>
+              <div class="text-center">
+                <%= f.submit "Submit Review", class: "btn btn-primary" %>
+              </div>
+            <% end %>
           <% end %>
         <% end %>
 
