@@ -34,22 +34,24 @@
           <%= link_to "Delete", experience_path(@experience), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
         </div>
 
-        <hr class="my-4">
 
         <!-- Formulario de reseña -->
+        <% if Booking.find_by(user_id: current_user.id) %>
+        <hr class="my-4">
         <h4 class="text-center mb-3">Leave a Review</h4>
-        <%= form_with model: [@experience, Review.new], local: true do |f| %>
-          <div class="mb-3">
-            <%= f.label :content, "Your Review", class: "form-label" %>
-            <%= f.text_area :content, rows: 3, class: "form-control", placeholder: "Write something..." %>
-          </div>
-          <div class="mb-3">
-            <%= f.label :rating, "Rating (1-5)", class: "form-label" %>
-            <%= f.number_field :rating, in: 1..5, class: "form-control" %>
-          </div>
-          <div class="text-center">
-            <%= f.submit "Submit Review", class: "btn btn-primary" %>
-          </div>
+          <%= form_with model: [@experience, Review.new], local: true do |f| %>
+            <div class="mb-3">
+              <%= f.label :content, "Your Review", class: "form-label" %>
+              <%= f.text_area :content, rows: 3, class: "form-control", placeholder: "Write something..." %>
+            </div>
+            <div class="mb-3">
+              <%= f.label :rating, "Rating (1-5)", class: "form-label" %>
+              <%= f.number_field :rating, in: 1..5, class: "form-control" %>
+            </div>
+            <div class="text-center">
+              <%= f.submit "Submit Review", class: "btn btn-primary" %>
+            </div>
+          <% end %>
         <% end %>
 
         <hr class="my-4">
