@@ -20,11 +20,12 @@
 
         <!-- Botones -->
         <div class="d-flex justify-content-center gap-2 flex-wrap mt-4">
-          <% unless Experience.find_by(user_id: current_user.id) %>
+<<<          <% unless Experience.find_by(user_id: current_user.id) %>
             <% if @experience.available_seats.positive? %>
                 <%= link_to "Book Now", experience_bookings_path(@experience),method: :post, data:{turbo: false}, class: "btn btn-success" %>
               <% else %>
-                <h3>There are no available seats fo this experience</h3>
+                 <h3 class= 'alert alert-danger'>There are no available seats fo this experience</h3>
+                 <%= link_to "Back to Experiences", experiences_path, class: "btn btn-warning" %>
               <% end %>
           <% end %>
           <% if @experience.user_id == current_user.id %>
