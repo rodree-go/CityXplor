@@ -5,6 +5,6 @@ class Experience < ApplicationRecord
   has_one_attached :photo
 
   def available_seats
-    self.seats - self.bookings.size
+      seats - bookings.size unless seats.nil? && bookings.size.nil?
   end
 end
