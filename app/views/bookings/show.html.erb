@@ -1,7 +1,14 @@
-<div class="container">
-  <h1>Bookings#show</h1>
-  <h1><%= @booking.experience.title %></h1>
-  <p>Starting at:</p><%= @booking.experience.start_time %>
-  <p>Ending at:</p><%= @booking.experience.end_time %>
-  <%= link_to "Cancelar Experiencia", @booking, data: {turbo_method: :delete, turbo_confirm: "Seguro que quieres cancelar"} %>
+<div class="container booking-container" style="max-width: 600px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); padding: 32px;">
+  <h1 style="font-size: 2rem; color: #2d3748; margin-bottom: 8px;">Booking</h1>
+  <h2 style="font-size: 1.5rem; color: #4a5568; margin-bottom: 24px;"><%= @booking.experience.title %></h2>
+  <div style="margin-bottom: 16px;">
+    <strong>Starting at:</strong>
+    <span style="margin-left: 8px;"><%= @booking.experience.start_time.strftime("%d/%m/%Y %H:%M") %></span>
+  </div>
+  <div style="margin-bottom: 32px;">
+    <strong>Ending at:</strong>
+    <span style="margin-left: 8px;"><%= @booking.experience.end_time.strftime("%d/%m/%Y %H:%M") %></span>
+  </div>
+  <%= link_to "View Experience", experience_path(@booking.experience), class: "btn btn-info mb-3", style: "background: #3182ce; color: #fff; padding: 10px 24px; border-radius: 6px; text-decoration: none; border: none; margin-bottom: 16px; display: inline-block;" %>
+  <%= link_to "Cancel Experience", @booking, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to cancel?"}, class: "btn btn-danger mb-3", style: "background: #e53e3e; color: #fff; padding: 10px 24px; border-radius: 6px; text-decoration: none; border: none;" %>
 </div>

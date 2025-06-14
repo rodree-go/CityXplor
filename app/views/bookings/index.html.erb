@@ -1,9 +1,23 @@
-<h1> Welcome! These Are Your Bookings:</h1>
 <div class="container">
-  <ul>
-  <% @bookings.each do |booking| %>
-  <li><%= booking.experience.title %> <%= booking.created_at%></li>
-  <% end %>
-  </ul>
-  <%= console %>
+  <h1 class= "mb-3"> Welcome! These Are Your Bookings:</h1>
+  <div class="experience p-3">
+    <% @bookings.each do |booking| %>
+      <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="card-title"><%= booking.experience.title %></h2>
+        <p class="card-text"><%= booking.experience.description %></p>
+        <p class="card-text">Price: $<%= booking.experience.price %></p>
+        <p class="card-text">Location: <%= booking.experience.location %></p>
+        <p class="card-text">Booked from: <%= booking.experience.start_time.strftime("%d/%m/%Y %H:%M") %> to <%= booking.experience.end_time.strftime("%d/%m/%Y %H:%M") %></p>
+        <%= link_to 'View Experience', experience_path(booking.experience), class: 'btn btn-info mb-3' %>
+        <%= link_to 'Cancel Booking', booking_path(booking), method: :delete, data: { confirm: 'Are you sure you want to cancel this booking?' }, class: 'btn btn-danger mb-3'%>
+      </div>
+      </div>
+    <% end %>
+    <div style="text-align: right;">
+      <%= link_to 'Back To Experiences', experiences_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
+
+
 </div>
