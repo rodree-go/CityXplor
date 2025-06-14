@@ -40,8 +40,10 @@ class ExperiencesController < ApplicationController
 
   def destroy
     @experience = Experience.find(params[:id])
+    @experience.bookings.destroy_all
+    @experience.reviews.destroy_all
     @experience.destroy
-    redirect_to experiences_path status: :see_other
+    redirect_to experiences_path, status: :see_other
   end
 
   private
