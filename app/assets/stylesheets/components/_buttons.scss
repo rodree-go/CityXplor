@@ -18,3 +18,74 @@
     color: white;
   }
 }
+
+.btn-primary-custom {
+  background-color: #00bfa6;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  &:hover {
+    background-color: #009e89;
+  }
+}
+
+.btn-warning-custom {
+  @extend .btn;
+  background-color: #f59e0b;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #d97706;
+  }
+}
+
+.btn-light-custom {
+  @extend .btn;
+  background-color: #f3f4f6;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: #e5e7eb;
+  }
+}
+
+
+.btn-outline-secondary-custom {
+  border: 1px solid #6b7280;
+  color: #6b7280;
+  background-color: transparent;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s;
+  &:hover {
+    background-color: #6b7280;
+    color: white;
+  }
+}
+
+.btn-outline-danger-custom {
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  background-color: transparent;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s;
+  &:hover {
+    background-color: #ef4444;
+    color: white;
+  }
+}

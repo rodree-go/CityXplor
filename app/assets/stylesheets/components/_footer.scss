@@ -9,3 +9,13 @@
     font-size: 0.9rem;
   }
 }
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+main {
+  min-height: calc(100vh - 80px); // Ajusta 80px si tu footer es más alto o más bajo
+}

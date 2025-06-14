@@ -21,42 +21,49 @@
 
 
         <!-- Botones -->
-        <div class="d-flex justify-content-center gap-2 flex-wrap mt-4">
-        <% unless Experience.find_by(user_id: current_user.id) %>
-            <% if @experience.available_seats.positive? %>
-                <%= link_to "Book Now", experience_bookings_path(@experience), method: :post, data: { turbo: false, confirm: "Are you sure you want to book this experience?" }, class: "btn btn-success" %>
-                <%= link_to "Back To Experiences", experiences_path, class: "btn btn-primary" %>
+        <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+          <% if user_signed_in? %>
+            <% unless @experience.host == current_user %>
+              <% if @experience.available_seats.positive? %>
+                <%= link_to "Book Now", experience_bookings_path(@experience), method: :post, data: { turbo: false }, class: "btn btn-success" %>
               <% else %>
-                <h3 class= 'alert alert-danger'>There are no available seats fo this experience</h3>
+                <h5 class="alert alert-danger">No seats available</h5>
                 <%= link_to "Back to Experiences", experiences_path, class: "btn btn-warning" %>
               <% end %>
+            <% end %>
+
+            <% if @experience.host == current_user %>
+              <%= link_to "Edit", edit_experience_path(@experience), class: "btn btn-outline-primary" %>
+              <%= link_to "Delete", experience_path(@experience), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
+            <% end %>
+          <% else %>
+            <%= link_to "Sign in to Book", new_user_session_path, class: "btn btn-warning" %>
           <% end %>
-          <% if @experience.user_id == current_user.id %>
-            <%= link_to "Edit", edit_experience_path(@experience), class: "btn btn-outline-primary" %>
-            <%= link_to "Destroy", experience_path(@experience), data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this experience?"}, class: "btn btn-outline-danger" %>
-          <% end %>
+
+          <%= link_to "Back To Experiences", experiences_path, class: "btn btn-success" %>
         </div>
 
+
+
         <!-- Formulario de reseña -->
-        <% unless Experience.find_by(user_id: current_user.id) %>
-          <% if Booking.find_by(user_id: current_user.id) %>
+        <% if user_signed_in? && Booking.exists?(guest: current_user, experience: @experience) && @experience.host != current_user %>
           <hr class="my-4">
           <h4 class="text-center mb-3">Leave a Review</h4>
-            <%= form_with model: [@experience, Review.new], local: true do |f| %>
-              <div class="mb-3">
-                <%= f.label :content, "Your Review", class: "form-label" %>
-                <%= f.text_area :content, rows: 3, class: "form-control", placeholder: "Write something..." %>
-              </div>
-              <div class="mb-3">
-                <%= f.label :rating, "Rating (1-5)", class: "form-label" %>
-                <%= f.number_field :rating, in: 1..5, class: "form-control" %>
-              </div>
-              <div class="text-center">
-                <%= f.submit "Submit Review", class: "btn btn-primary" %>
-              </div>
-            <% end %>
+          <%= form_with model: [@experience, Review.new], local: true do |f| %>
+            <div class="mb-3">
+              <%= f.label :content, "Your Review", class: "form-label" %>
+              <%= f.text_area :content, rows: 3, class: "form-control", placeholder: "Write something..." %>
+            </div>
+            <div class="mb-3">
+              <%= f.label :rating, "Rating (1-5)", class: "form-label" %>
+              <%= f.number_field :rating, in: 1..5, class: "form-control" %>
+            </div>
+            <div class="text-center">
+              <%= f.submit "Submit Review", class: "btn btn-primary" %>
+            </div>
           <% end %>
         <% end %>
+
 
         <hr class="my-4">
 
