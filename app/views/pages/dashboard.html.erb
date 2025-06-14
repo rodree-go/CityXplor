@@ -3,37 +3,55 @@
 
   <% if @hosted_experiences.present? %>
     <h3 class="mb-3">My Experiences</h3>
-    <ul class="mb-4">
+    <div class="row">
       <% @hosted_experiences.each do |experience| %>
-        <li class="mb-2">
-          <strong><%= experience.title %></strong><br>
-          <%= experience.description %><br>
-          <strong>Category:</strong> <%= experience.category %><br>
-          <strong>Price:</strong> $<%= experience.price %><br>
-          <strong>Rating:</strong> ⭐ <%= experience.rating %><br>
-          <strong>Seats:</strong> <%= experience.available_seats %> / <%= experience.seats %><br>
-          <strong>Start Time:</strong> <%= experience.start_time %><br>
-          <strong>End Time:</strong> <%= experience.end_time %><br>
-          <strong>Location:</strong> <%= experience.location %><br>
-          <%= link_to 'View', experience_path(experience), class: "btn btn-primary btn-sm me-2 mt-2" %>
-          <%= link_to 'Edit', edit_experience_path(experience), class: "btn btn-warning btn-sm mt-2" %>
-        </li>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title"><%= experience.title %></h5>
+              <p class="card-text"><%= experience.description %></p>
+              <ul class="list-group list-group-flush mb-3">
+                <li class="list-group-item"><strong>Category:</strong> <%= experience.category %></li>
+                <li class="list-group-item"><strong>Price:</strong> $<%= experience.price %></li>
+                <li class="list-group-item"><strong>Rating:</strong> ⭐ <%= experience.rating %></li>
+                <li class="list-group-item"><strong>Seats:</strong> <%= experience.available_seats %> / <%= experience.seats %></li>
+                <li class="list-group-item"><strong>Start Time:</strong> <%= experience.start_time %></li>
+                <li class="list-group-item"><strong>End Time:</strong> <%= experience.end_time %></li>
+                <li class="list-group-item"><strong>Location:</strong> <%= experience.location %></li>
+              </ul>
+              <div class="d-flex justify-content-between">
+                <%= link_to experience_path(experience), class: "btn btn-primary btn-sm" do %>
+                  <i class="fa-solid fa-eye"></i> View
+                <% end %>
+                <%= link_to edit_experience_path(experience), class: "btn btn-secondary btn-sm" do %>
+                  <i class="fa-solid fa-pen-to-square"></i> Edit
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
       <% end %>
-    </ul>
-    <%= link_to 'Add New Experience', new_experience_path, class: "btn btn-success mb-5" %>
+    </div>
+    <div class="text-end">
+      <%= link_to 'Add New Experience', new_experience_path, class: "btn btn-success" %>
+    </div>
+  <% else %>
+    <div class="alert alert-info mt-3">You don't own any experiences yet.</div>
   <% end %>
 
   <% if @hosted_reviews.present? %>
-    <h3 class="mb-3">My Reviews</h3>
-    <ul class="mb-5">
+    <h3 class="mt-5 mb-3">My Reviews</h3>
+    <ul class="list-group mb-4">
       <% @hosted_reviews.each do |review| %>
-        <li class="mb-2">
+        <li class="list-group-item">
           <strong><%= review.user.email %></strong> rated ⭐ <%= review.rating %>/5 for
           <%= review.experience.title %><br>
-          "<%= review.content %>"
+          <span class="fst-italic">"<%= review.content %>"</span>
         </li>
       <% end %>
     </ul>
+  <% else %>
+    <div class="alert alert-info mt-3">No reviews for your experiences yet.</div>
   <% end %>
 
   <!-- TABS -->
@@ -54,69 +72,83 @@
 
   <div class="tab-content" id="myTabContent">
     <!-- TAB: BOOKINGS -->
-<div class="tab-pane fade show active" id="booking" role="tabpanel" aria-labelledby="booking-tab">
-  <% unless Experience.exists?(user_id: current_user.id) %>
-    <h3 class="mb-3">My Bookings</h3>
-    <% if @booked_experiences.present? %>
-      <div class="table-responsive">
-        <table class="table table-hover align-middle shadow-sm rounded">
-          <thead class="table-light">
-            <tr>
-              <th scope="col">Experience</th>
-              <th scope="col">Start</th>
-              <th scope="col">End</th>
-              <th scope="col" class="text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @booked_experiences.each do |booking| %>
+    <div class="tab-pane fade show active" id="booking" role="tabpanel" aria-labelledby="booking-tab">
+      <% if @booked_experiences.present? %>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle shadow-sm rounded">
+            <thead class="table-light">
               <tr>
-                <td>
-                  <strong><%= booking.experience.title %></strong><br>
-                  <small class="text-muted"><%= truncate(booking.experience.description, length: 40) %></small>
-                </td>
-                <td><%= booking.experience.start_time.strftime("%b %d, %Y %I:%M %p") %></td>
-                <td><%= booking.experience.end_time.strftime("%b %d, %Y %I:%M %p") %></td>
-                <td class="text-center">
-                  <%= link_to experience_booking_path(booking.experience_id, booking.id), class: "btn btn-sm btn-outline-primary me-2", title: "View Booking" do %>
-                    <i class="fa-solid fa-eye"></i>
-                  <% end %>
-                  <%= link_to booking, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-outline-danger", title: "Cancel Booking" do %>
-                    <i class="fa-solid fa-trash-can"></i>
-                  <% end %>
-                </td>
+                <th>Experience</th>
+                <th>Start</th>
+                <th>End</th>
+                <th class="text-center">Actions</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    <% else %>
-      <p class="text-muted">You don't have any bookings yet.</p>
-    <% end %>
-  <% end %>
-</div>
+            </thead>
+            <tbody>
+              <% @booked_experiences.each do |booking| %>
+                <tr>
+                  <td>
+                    <strong><%= booking.experience.title %></strong><br>
+                    <small class="text-muted"><%= truncate(booking.experience.description, length: 40) %></small>
+                  </td>
+                  <td><%= booking.experience.start_time.strftime("%b %d, %Y %I:%M %p") %></td>
+                  <td><%= booking.experience.end_time.strftime("%b %d, %Y %I:%M %p") %></td>
+                  <td class="text-center">
+                    <%= link_to experience_booking_path(booking.experience_id, booking.id), class: "btn btn-sm btn-outline-primary me-2", title: "View Booking" do %>
+                      <i class="fa-solid fa-eye"></i>
+                    <% end %>
+                    <%= link_to booking, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-outline-danger", title: "Cancel Booking" do %>
+                      <i class="fa-solid fa-trash-can"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p class="text-muted">You don't have any bookings yet.</p>
+      <% end %>
+    </div>
 
+    <!-- TAB: REVIEWS -->
+    <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+      <h3 class="mt-4 mb-3">Your Latest Reviews</h3>
+      <% if @user_reviews.present? %>
+        <ul class="list-group">
+          <% @user_reviews.each do |review| %>
+            <li class="list-group-item">
+              <strong><%= review.experience.title %></strong> rated ⭐ <%= review.rating %>/5 by You<br>
+              <span class="fst-italic">"<%= review.content %>"</span>
+              <div class="mt-2">
+                <%= link_to 'View', experience_path(review.experience_id), class: "btn btn-info btn-sm" %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <div class="alert alert-info mt-3">You haven't reviewed any experiences yet.</div>
+      <% end %>
+    </div>
 
     <!-- TAB: RECOMMENDED -->
     <div class="tab-pane fade" id="recommended" role="tabpanel" aria-labelledby="recommended-tab">
-      <% unless Experience.exists?(user_id: current_user.id) %>
-        <h3 class="mb-4">Recommended Experiences</h3>
-        <div class="row">
-          <% @recommended_experiences.each do |experience| %>
-            <div class="col-md-4 mb-4">
-              <div class="card h-100 shadow-sm">
-                <div class="card-body d-flex flex-column">
-                  <h5 class="card-title"><%= experience.title %></h5>
-                  <p class="card-text"><%= truncate(experience.description, length: 100) %></p>
-                  <p class="card-text mb-1"><strong>Rating:</strong> ⭐ <%= experience.rating %></p>
-                  <p class="card-text"><strong>Price:</strong> $<%= experience.price %></p>
-                  <%= link_to 'View Experience', experience_path(experience), class: 'btn btn-primary mt-auto' %>
-                </div>
+      <h3 class="mb-4">Recommended Experiences</h3>
+      <div class="row">
+        <% @recommended_experiences.each do |experience| %>
+          <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title"><%= experience.title %></h5>
+                <p class="card-text"><%= truncate(experience.description, length: 100) %></p>
+                <p class="card-text mb-1"><strong>Rating:</strong> ⭐ <%= experience.rating %></p>
+                <p class="card-text"><strong>Price:</strong> $<%= experience.price %></p>
+                <%= link_to 'View Experience', experience_path(experience), class: 'btn btn-primary mt-auto' %>
               </div>
             </div>
-          <% end %>
-        </div>
-      <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
