@@ -1,4 +1,7 @@
 class BookingsController < ApplicationController
+  def index
+    @bookings = Booking.where(guest: current_user)
+  end
 
   def create
     @booking = Booking.new

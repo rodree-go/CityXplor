@@ -9,5 +9,6 @@
     <strong>Ending at:</strong>
     <span style="margin-left: 8px;"><%= @booking.experience.end_time.strftime("%d/%m/%Y %H:%M") %></span>
   </div>
-  <%= link_to "Cancelar Experiencia", @booking, data: {turbo_method: :delete, turbo_confirm: "Seguro que quieres cancelar"}, class: "btn btn-danger", style: "background: #e53e3e; color: #fff; padding: 10px 24px; border-radius: 6px; text-decoration: none; border: none;" %>
+  <%= link_to "View Experience", experience_path(@booking.experience), class: "btn btn-info mb-3", style: "background: #3182ce; color: #fff; padding: 10px 24px; border-radius: 6px; text-decoration: none; border: none; margin-bottom: 16px; display: inline-block;" %>
+  <%= link_to "Cancel Experience", @booking, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to cancel?"}, class: "btn btn-danger mb-3", style: "background: #e53e3e; color: #fff; padding: 10px 24px; border-radius: 6px; text-decoration: none; border: none;" %>
 </div>
