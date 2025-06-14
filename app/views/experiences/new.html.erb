@@ -1,16 +1,42 @@
-<div class="container mt-5 shadow border w-75">
-  <h1>Experiences#new</h1>
-  <p>Find me in app/views/experiences/new.html.erb</p>
-  <%= simple_form_for @experience do |f| %>
-    <%= f.input :title %>
-    <%= f.input :description %>
-    <%= f.input :location %>
-    <%= f.input :seats %>
-    <%= f.input :category, collection:["Culture", "Outdoors", "Gastronomy", "Party", "Sports", "Art", "Spirituality"], prompt:"Select Category" %>
-    <%= f.input :price %>
-    <%= f.input :start_time, html5: true %>
-    <%= f.input :end_time, html5: true %>
-    <%= f.input :photo, as: :file %>,
-    <%= f.button :submit, 'Create Experience', class:"btn btn-primary" %>
+<div class="container mt-5 shadow border w-75 p-5 rounded bg-light">
+  <h1 class="mb-4 text-center">Create a New Experience</h1>
+  <p class="text-center text-muted mb-4">Fill in the details below to add a new experience.</p>
+  <%= simple_form_for @experience, html: { class: "needs-validation" } do |f| %>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= f.input :title, input_html: { class: "form-control" }, label_html: { class: "form-label" } %>
+      </div>
+      <div class="col-md-6 mb-3">
+        <%= f.input :location, input_html: { class: "form-control" }, label_html: { class: "form-label" } %>
+      </div>
+    </div>
+    <div class="mb-3">
+      <%= f.input :description, input_html: { class: "form-control", rows: 3 }, label_html: { class: "form-label" } %>
+    </div>
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <%= f.input :seats, input_html: { class: "form-control" }, label_html: { class: "form-label" } %>
+      </div>
+      <div class="col-md-4 mb-3">
+        <%= f.input :category, collection: ["Culture", "Outdoors", "Gastronomy", "Party", "Sports", "Art", "Spirituality"], prompt: "Select Category", input_html: { class: "form-select" }, label_html: { class: "form-label" } %>
+      </div>
+      <div class="col-md-4 mb-3">
+        <%= f.input :price, input_html: { class: "form-control" }, label_html: { class: "form-label" } %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= f.input :start_time, html5: true, input_html: { class: "form-control" }, label_html: { class: "form-label" } %>
+      </div>
+      <div class="col-md-6 mb-3">
+        <%= f.input :end_time, html5: true, input_html: { class: "form-control" }, label_html: { class: "form-label" } %>
+      </div>
+    </div>
+    <div class="mb-4">
+      <%= f.input :photo, as: :file, input_html: { class: "form-control" }, label_html: { class: "form-label" } %>
+    </div>
+    <div class="text-center">
+      <%= f.button :submit, 'Create Experience', class: "btn btn-primary px-5 py-2" %>
+    </div>
   <% end %>
 </div>
