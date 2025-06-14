@@ -35,6 +35,8 @@
           <div class="card mb-4 shadow-sm flex-fill">
             <div class="card-body">
               <p class="card-text">"<%= truncate(review.content, length: 120) %>"</p>
+              <!-- Agrega la puntuación aquí -->
+              <p class="mb-1">⭐ <%= review.rating %> / 5</p>
               <p class="text-muted mb-0"><strong><%= review.user.email %></strong></p>
             </div>
           </div>

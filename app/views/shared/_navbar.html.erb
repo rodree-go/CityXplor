@@ -32,8 +32,8 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <li><%= link_to "Messages", "#", class: "dropdown-item" %></li>
               <li><%= link_to "Edit profile", edit_user_registration_path, class: "dropdown-item" %></li>
-              <li><%= link_to "My bookings", bookings_path, class: "dropdown-item" %></li>
-              <li><%= link_to "My experiences", experiences_path, class: "dropdown-item" %></li>
+              <li><%= link_to "My bookings", dashboard_path, class: "dropdown-item" %></li>
+              <li><%= link_to "My experiences", dashboard_path, class: "dropdown-item" %></li>
               <li><hr class="dropdown-divider"></li>
               <li><%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item text-danger" %></li>
             </ul>
