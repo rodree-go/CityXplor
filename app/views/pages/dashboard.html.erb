@@ -1,53 +1,66 @@
-<div class="container">
-    <% if @hosted_experiences.present? %>
-      <h3>My Experiences</h3>
-      <ul>
-        <% @hosted_experiences.each do |experience| %>
-          <li>
-            <strong><%= experience.title %></strong><br>
-            <%= experience.description %><br>
-            <strong>Category:</strong> <%= experience.category %><br>
-            <strong>Price:</strong> $<%= experience.price %><br>
-            <strong>Rating:</strong> ⭐ <%= experience.rating %><br>
-            <strong>Seats:</strong> <%= experience.available_seats %> / <%= experience.seats %><br>
-            <strong>Start Time:</strong> <%= experience.start_time %><br>
-            <strong>End Time:</strong> <%= experience.end_time %><br>
-            <strong>Location:</strong> <%= experience.location %><br>
-            <%= link_to 'View', experience_path(experience), class: "btn btn-primary" %>
-            <%= link_to 'Edit', edit_experience_path(experience), class: "btn btn-warning" %>
-          </li>
+<div class="container my-4">
+  <% if @hosted_experiences.present? %>
+    <h3 class="mb-3">My Experiences</h3>
+    <div class="row">
+      <% @hosted_experiences.each do |experience| %>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title"><%= experience.title %></h5>
+              <p class="card-text"><%= experience.description %></p>
+              <ul class="list-group list-group-flush mb-3">
+                <li class="list-group-item"><strong>Category:</strong> <%= experience.category %></li>
+                <li class="list-group-item"><strong>Price:</strong> $<%= experience.price %></li>
+                <li class="list-group-item"><strong>Rating:</strong> ⭐ <%= experience.rating %></li>
+                <li class="list-group-item"><strong>Seats:</strong> <%= experience.available_seats %> / <%= experience.seats %></li>
+                <li class="list-group-item"><strong>Start Time:</strong> <%= experience.start_time %></li>
+                <li class="list-group-item"><strong>End Time:</strong> <%= experience.end_time %></li>
+                <li class="list-group-item"><strong>Location:</strong> <%= experience.location %></li>
+              </ul>
+              <div class="d-flex justify-content-between">
+                <%= link_to experience_path(experience), class: "btn btn-primary btn-sm" do %>
+                  <i class="fa-solid fa-eye"></i> View
+                <% end %>
+                <%= link_to edit_experience_path(experience), class: "btn btn-secondary btn-sm" do %>
+                  <i class="fa-solid fa-pen-to-square"></i> Edit
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
       <% end %>
-      </ul>
+    </div>
+    <div class="text-end">
       <%= link_to 'Add New Experience', new_experience_path, class: "btn btn-success" %>
-    <% else %>
-      <% "You don't own any experiences yet." if Experience.find_by(user_id: current_user.id) %>
+    </div>
+  <% else %>
+    <% if Experience.find_by(user_id: current_user.id) %>
+      <div class="alert alert-info mt-3">You don't own any experiences yet.</div>
     <% end %>
+  <% end %>
 
   <% if @hosted_reviews.present? %>
-  <h3>My Reviews</h3>
-    <ul>
+    <h3 class="mt-5 mb-3">My Reviews</h3>
+    <ul class="list-group">
       <% @hosted_reviews.each do |review| %>
-        <li>
+        <li class="list-group-item">
           <strong><%= review.user.email %></strong> rated
           (⭐ <%= review.rating %>)/5 for
           <%= review.experience.title %><br>
-          "<%= review.content %>"
+          <span class="fst-italic">"<%= review.content %>"</span>
         </li>
       <% end %>
     </ul>
   <% else %>
-    <% "No reviews for your experiences yet." if Experience.find_by(user_id: current_user.id)  %>
+    <% if Experience.find_by(user_id: current_user.id) %>
+      <div class="alert alert-info mt-3">No reviews for your experiences yet.</div>
+    <% end %>
   <% end %>
-
-
-
-
-
-
 </div>
 
 <div class="container">
-  <h1>Dahsboard</h1>
+  <% unless Experience.find_by(user_id: current_user.id) %>
+  <h1>Dashboard</h1>
   <hr>
   <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
@@ -66,7 +79,6 @@
 
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="booking" role="tabpanel" aria-labelledby="booking-tab">
-      <% unless Experience.find_by(user_id: current_user.id) %>
           <!-- Guest -->
           <h3>My Bookings</h3>
           <% if @booked_experiences.present? %>
@@ -89,7 +101,7 @@
                     <%= link_to experience_booking_path(booking.experience_id, booking.id), class: "text-primary text-decoration-none" do %>
                       <i class="fa-solid fa-eye"></i>
                     <% end %>
-                    | 
+                    |
                     <%= link_to booking, class: "text-danger", method: :delete, data: { confirm: 'Are you sure?' } do %>
                       <i class="fa-solid fa-ban"></i>
                     <% end %>
